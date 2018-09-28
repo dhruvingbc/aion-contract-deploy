@@ -22,7 +22,7 @@ let contractInstance;
 let acc = web3.personal.listAccounts;
 let events;
 let a0 = acc[2];
-let pw0 = "password";
+let pw0 = "_password_";
 
 Promise.all([
   // Unlock accounts & complile contract

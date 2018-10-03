@@ -42,14 +42,12 @@ Promise.all([
 
 ]).then((res) => {
     let abi = res[0].ToDo.info.abiDefinition;
-    let code = res[0].ToDo.code; // bytecode
   console.log("[log] accessing contract\n");
 
   // Contract Instantiantion
   contractInstance = web3.eth.contract(abi).at(contractAddr);
 
-  const contractObj = web3.eth.contract(abi);
-  const contractData = contractObj.new.getData({data:code});
+ 
   
 
   const data = contractInstance.createTask.getData('hi', 'low');

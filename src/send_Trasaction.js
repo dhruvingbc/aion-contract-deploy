@@ -21,13 +21,21 @@ const account = new Accounts();
 const acc = account.privateKeyToAccount(privateKey);
 const nonce = web3.eth.getTransactionCount(acc.address);
 const value = process.argv[2];
+const gasTx = {
+    to: '0xa0f717ba35f5c539c73e144dbe2cb0a1bf951a93b3dc933ccde97b0100770487',
+    value,
+    nonce,
+    timestamp: Date.now() * 1000
+}
+const gas = web3.eth.estimateGas(gasTx);
+console.log(gas);
 
 
 const tx = {
     to: '0xa0f717ba35f5c539c73e144dbe2cb0a1bf951a93b3dc933ccde97b0100770487',
     value,
     gasPrice: 10000000000,
-    gas: 220000,
+    gas,
     nonce,
     timestamp: Date.now() * 1000
 }

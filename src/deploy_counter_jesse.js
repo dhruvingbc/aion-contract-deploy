@@ -9,7 +9,7 @@ const Accounts = require("aion-keystore");
 // directory where Web3 is stored, in Aion Kernel
 global.Web3 = require("aion-web3");
 // connecting to Aion local node
-const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://aion-mastery.bdnodes.net:8545"));
 
 // Importing unlock, compile and deploy scripts
 const unlock = require("./contracts/unlock.js");
@@ -28,7 +28,7 @@ let privateKey =
 const account = new Accounts();
 const acc = account.privateKeyToAccount(privateKey);
 Promise.all([
- // complile contract
+  //complile contract
   compile(web3, sol),
   console.log("[log] 2. compiling contract")
 ]).then(res => {
@@ -48,7 +48,7 @@ Promise.all([
   });
   
 
-  let tempNonce = "";
+  let nonce = web3.eth.getTransactionCount(acc.address)
 
   const data = {
     jsonrpc: "2.0",
@@ -58,7 +58,7 @@ Promise.all([
   };
   rp({
     method: "POST",
-    uri: "http://127.0.0.1:8545",
+    uri: "http://aion-mastery.bdnodes.net:8545",
     body: data,
     json: true
   }).then(body => {
@@ -66,8 +66,8 @@ Promise.all([
     console.log("Nonce => ", tempNonce);
     const transaction = {
       nonce: tempNonce,
-      gasPrice: web3.eth.gasPrice,
-      gasLimit: estimate,
+      gasPrice: 100000000000,
+      gas: 2200000,
       data: contractData,
       timestamp: Date.now() * 1000
     };
@@ -85,7 +85,7 @@ Promise.all([
         };
         rp({
           method: "POST",
-          uri: "http://127.0.0.1:8545",
+          uri: "http://aion-mastery.bdnodes.net:8545",
           body,
           json: true
         })

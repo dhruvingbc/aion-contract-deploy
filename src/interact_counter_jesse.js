@@ -33,7 +33,7 @@ const account = new Accounts();
 const acc = account.privateKeyToAccount(privateKey);;
 ; // Grab your account index at [i]
 let pw0 = "AccountPasswordGoesHere"; // Account password associated w/ a0
-
+//not needed when dapp provides 
 Promise.all([
   // Unlock accounts & complile contract
   compile(web3, sol),
@@ -42,15 +42,14 @@ Promise.all([
 
 ]).then((res) => {
   let a0 = '0xa0aa6d40d962ef60d6c42da54adec24f242de46f27d2ea3d96f0ccefa5678b62'; // Store Account
-  let abi = res[0].Counter.info.abiDefinition; // abi
-  let code = res[0].Counter.code; // bytecode
+  let abi = res[0].Counter.info.abiDefinition; // abi comes from dapp 
+  let code = res[0].Counter.code; // bytecode comes from dapp 
   console.log("[log] accessing contract\n");
 
   // Contract Instantiantion
   contractInstance = web3.eth.contract(abi).at(contractAddr);
 
   const contractObj = web3.eth.contract(abi);
-  const contractData = contractObj.new.getData({data:code});
   
 
   const data = contractInstance.incrementCounter.getData();
@@ -68,13 +67,15 @@ Promise.all([
 
 
       // acc.signTransaction(contractInstance.incrementCounter().getData()).then(data => { console.log(data) });
+      let estimate = web3.eth.estimateGas({ data: data });
+        console.log(estimate);
       console.log('data=>', data);
       console.log('acc=>', acc);
       const tx = {
         to: contractAddr,
         data,
         gasPrice: 10000000000,
-        gas: 220000,
+        gas: estimate,
         nonce: nonce,
         timestamp: Date.now() * 1000
       }

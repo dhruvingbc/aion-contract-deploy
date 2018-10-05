@@ -28,7 +28,7 @@ let privateKey =
 const account = new Accounts();
 const acc = account.privateKeyToAccount(privateKey);
 Promise.all([
-  //complile contract
+  //complile contract not needed with dapp 
   compile(web3, sol),
   console.log("[log] 2. compiling contract")
 ]).then(res => {
@@ -37,7 +37,7 @@ Promise.all([
   let code = res[0].Counter.code;
 
   console.log("[log]compile successful! \n");
-  // get NRG estimate for contract
+  // get NRG estimate for contract get from dapp
   let estimate = web3.eth.estimateGas({ data: code });
   console.log(estimate);
   // Contract object
@@ -66,9 +66,9 @@ Promise.all([
     console.log("Nonce => ", tempNonce);
     const transaction = {
       nonce: tempNonce,
-      gasPrice: 100000000000,
-      gas: 2200000,
-      data: contractData,
+      gasPrice: 100000000000, //set by user on aiwa
+      gas: 2200000, //gas estimate doesn't work, error violating upper bound 
+      data: contractData, //from dapp 
       timestamp: Date.now() * 1000
     };
     console.log("transaction => ", transaction);

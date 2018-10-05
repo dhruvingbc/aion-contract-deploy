@@ -33,7 +33,7 @@ console.log(gas);
 
 const tx = {
     to: '0xa0f717ba35f5c539c73e144dbe2cb0a1bf951a93b3dc933ccde97b0100770487',
-    value,
+    value: 10,
     gasPrice: 10000000000,
     gas,
     nonce,

@@ -1,0 +1,91 @@
+[
+    {
+        "Counter": {
+            "code": "0x605060405234156100105760006000fd5b604051601080610201833981016040528080519060100190919050505b3360016000508282909180600101839055555050508060006000508190909055505b50610055565b61019d806100646000396000f30060506040526000356c01000000000000000000000000900463ffffffff1680631b9265b8146100545780635b34b9661461005e578063a87d942c14610074578063f5c5ad831461009e5761004e565b60006000fd5b61005c6100b4565b005b341561006a5760006000fd5b6100726100b7565b005b34156100805760006000fd5b61008861010b565b6040518082815260100191505060405180910390f35b34156100aa5760006000fd5b6100b261011d565b005b5b565b6001600060008282825054019250508190909055507f6816b015b746c8c8f573c271468a9bb4b1f0cb04ff12291673f7d2320a4901f76001604051808215151515815260100191505060405180910390a15b565b6000600060005054905061011a565b90565b6001600060008282825054039250508190909055507f09a2ae7b00cae5ecb77463403c1d5d6c03cf6db222a78e22cbcafbe0a1ac9eec6001604051808215151515815260100191505060405180910390a15b5600a165627a7a72305820b3dab74470811e4252fee5953b4a99410ba278e1370fe7299a1bbcea006eaee90029",
+            "info": {
+                "abiDefinition": [
+                    {
+                        "outputs": [],
+                        "constant": false,
+                        "payable": true,
+                        "inputs": [],
+                        "name": "pay",
+                        "type": "function"
+                    },
+                    {
+                        "outputs": [],
+                        "constant": false,
+                        "payable": false,
+                        "inputs": [],
+                        "name": "incrementCounter",
+                        "type": "function"
+                    },
+                    {
+                        "outputs": [
+                            {
+                                "name": "",
+                                "type": "int128"
+                            }
+                        ],
+                        "constant": true,
+                        "payable": false,
+                        "inputs": [],
+                        "name": "getCount",
+                        "type": "function"
+                    },
+                    {
+                        "outputs": [],
+                        "constant": false,
+                        "payable": false,
+                        "inputs": [],
+                        "name": "decrementCounter",
+                        "type": "function"
+                    },
+                    {
+                        "outputs": [],
+                        "payable": false,
+                        "inputs": [
+                            {
+                                "name": "_initCount",
+                                "type": "int128"
+                            }
+                        ],
+                        "name": "",
+                        "type": "constructor"
+                    },
+                    {
+                        "outputs": [],
+                        "inputs": [
+                            {
+                                "indexed": false,
+                                "name": "counter",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "CounterIncreased",
+                        "anonymous": false,
+                        "type": "event"
+                    },
+                    {
+                        "outputs": [],
+                        "inputs": [
+                            {
+                                "indexed": false,
+                                "name": "counter",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "CounterDecreased",
+                        "anonymous": false,
+                        "type": "event"
+                    }
+                ],
+                "languageVersion": "0",
+                "language": "Solidity",
+                "compilerVersion": "0.4.15+commit.ecf81ee5.Linux.g++",
+                "source": "/*\n  sol Counter\n  Simple Counter Contract - Increase / Decrease by 1\n*/\n\npragma solidity ^0.4.10;\n\ncontract Counter {\n\n  /* State Variables */\n  // State variables are values which are permanently stored in contract storage.\n  int private count; // = 0\n  address owner;\n\n  // EVENTS\n  event CounterIncreased(bool counter);\n  event CounterDecreased(bool counter);\n  /* Functions */\n  // Functions are the executable units of code within a contract.\n  function Counter(int _initCount) public {\n      owner = msg.sender;\n      count = _initCount;\n  }\n\n  function incrementCounter() public {\n      count += 1;\n      CounterIncreased(true);\n  }\n  function decrementCounter() public {\n      count -= 1;\n      CounterDecreased(true);\n  }\n  function getCount() public constant returns (int) {\n      return count;\n  }\n  function pay() public payable {\n      \n  }\n}\n"
+            }
+        }
+    },
+    null
+]

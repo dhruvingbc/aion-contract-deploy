@@ -9,7 +9,7 @@ const Accounts = require("aion-keystore");
 // directory where Web3 is stored, in Aion Kernel
 global.Web3 = require("aion-web3");
 // connecting to Aion local node
-const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("https://aion-mastery.jonpurdy.com"));
 
 // Importing unlock, compile and deploy scripts
 const unlock = require("./contracts/unlock.js");
@@ -17,7 +17,7 @@ const compile = require("./contracts/compile.js");
 const deploy = require("./contracts/deploy.js");
 const readlineSync = require("readline-sync");
 
-const sol = fs.readFileSync("./contracts/Counter.sol", {
+const sol = fs.readFileSync("./contracts/pay.sol", {
   encoding: "utf8"
 });
 
@@ -28,18 +28,20 @@ let privateKey =
 const account = new Accounts();
 const acc = account.privateKeyToAccount(privateKey);
 Promise.all([
- // complile contract
+  //complile contract
   compile(web3, sol),
   console.log("[log] 2. compiling contract")
 ]).then(res => {
   let a0 = res[0];
   let abi = res[0].Counter.info.abiDefinition;
   let code = res[0].Counter.code;
+  fs.writeFileSync("./compiles.json", JSON.stringify(res), { encoding: "utf8" });
+
 
   console.log("[log]compile successful! \n");
   // get NRG estimate for contract
-  let estimate = web3.eth.estimateGas({ data: code });
-  console.log(estimate);
+  // let estimate = web3.eth.estimateGas({ data: code });
+  // console.log(estimate);
   // Contract object
   const contract = web3.eth.contract(abi);
   // Get contract data
@@ -48,7 +50,7 @@ Promise.all([
   });
   
 
-  let tempNonce = "";
+  let nonce = web3.eth.getTransactionCount(acc.address)
 
   const data = {
     jsonrpc: "2.0",
@@ -58,7 +60,7 @@ Promise.all([
   };
   rp({
     method: "POST",
-    uri: "http://127.0.0.1:8545",
+    uri: "https://aion-mastery.jonpurdy.com",
     body: data,
     json: true
   }).then(body => {
@@ -66,8 +68,8 @@ Promise.all([
     console.log("Nonce => ", tempNonce);
     const transaction = {
       nonce: tempNonce,
-      gasPrice: web3.eth.gasPrice,
-      gasLimit: estimate,
+      gasPrice: 100000000000,
+      gas: 2200000,
       data: contractData,
       timestamp: Date.now() * 1000
     };
@@ -85,7 +87,7 @@ Promise.all([
         };
         rp({
           method: "POST",
-          uri: "http://127.0.0.1:8545",
+          uri: "https://aion-mastery.jonpurdy.com",
           body,
           json: true
         })

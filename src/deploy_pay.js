@@ -33,9 +33,9 @@ Promise.all([
   console.log("[log] 2. compiling contract")
 ]).then(res => {
   let a0 = res[0];
-  let abi = res[0].Counter.info.abiDefinition;
-  let code = res[0].Counter.code;
-  fs.writeFileSync("./compiles.json", JSON.stringify(res), { encoding: "utf8" });
+  let abi = res[0].Platypus.info.abiDefinition;
+  let code = res[0].Platypus.code;
+  fs.writeFileSync("./plat.json", JSON.stringify(res), { encoding: "utf8" });
 
 
   console.log("[log]compile successful! \n");

@@ -9,7 +9,7 @@ const Accounts = require("aion-keystore");
 // directory where Web3 is stored, in Aion Kernel
 global.Web3 = require("aion-web3");
 // connecting to Aion local node
-const web3 = new Web3(new Web3.providers.HttpProvider("http://aion-mastery.bdnodes.net:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("https://aion-mastery.jonpurdy.com"));
 
 // Importing unlock, compile and deploy scripts
 const unlock = require("./contracts/unlock.js");
@@ -77,16 +77,16 @@ Promise.all([
       .signTransaction(transaction)
       .then(signed => {
         console.log(`signed ${JSON.stringify(signed)}`);
-        const body = {
+        const post = {
           jsonrpc: "2.0",
           method: "eth_sendRawTransaction",
-          params: [signed.rawTransaction],
+          params: [transaction],
           id: 1
         };
         rp({
           method: "POST",
-          uri: "http://aion-mastery.bdnodes.net:8545",
-          body,
+          uri: "https://aion-mastery.jonpurdy.com",
+          post,
           json: true
         })
           .then(response => {
@@ -127,4 +127,5 @@ Promise.all([
         console.log("error => ", e);
       });
   });
+
 });

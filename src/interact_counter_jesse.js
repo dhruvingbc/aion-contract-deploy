@@ -12,7 +12,7 @@ const Accounts = require("aion-keystore");
 // directory where Web3 is stored, in Aion Kernel
 global.Web3 = require('aion-web3');
 // connecting to Aion local node
-const web3 = new Web3(new Web3.providers.HttpProvider("http://aion-mastery.bdnodes.net:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.1.201:8545"));
 
 // Importing unlock, compile and deploy scripts
 // const unlock = require('./scripts/unlock.js')
@@ -91,7 +91,7 @@ Promise.all([
         };
         rp({
           method: "POST",
-          uri: "http://aion-mastery.bdnodes.net:8545",
+          uri: "http://192.168.1.201:8545",
           body,
           json: true
         })

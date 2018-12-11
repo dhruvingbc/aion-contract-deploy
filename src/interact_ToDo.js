@@ -12,7 +12,7 @@ const Accounts = require("aion-keystore");
 // directory where Web3 is stored, in Aion Kernel
 global.Web3 = require('aion-web3');
 // connecting to Aion local node
-const web3 = new Web3(new Web3.providers.HttpProvider("https://aion-mastery.jonpurdy.com"));
+const web3 = new Web3(new Web3.providers.HttpProvider("https://api.nodesmith.io/v1/aion/testnet/jsonrpc?apiKey=85268e8181c74b249a93581a8cb9c213"));
 
 // Importing unlock, compile and deploy scripts
 // const unlock = require('./scripts/unlock.js')

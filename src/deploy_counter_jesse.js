@@ -32,9 +32,11 @@ Promise.all([
   compile(web3, sol),
   console.log("[log] 2. compiling contract")
 ]).then(res => {
-  let a0 = res[0];
+ let a0 = res[0];
   let abi = res[0].Counter.info.abiDefinition;
   let code = res[0].Counter.code;
+  fs.writeFileSync("./neww.json", JSON.stringify(res), { encoding: "utf8" });
+
 
   console.log("[log]compile successful! \n");
   // get NRG estimate for contract get from dapp
